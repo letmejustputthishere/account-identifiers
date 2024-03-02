@@ -21,14 +21,14 @@ module {
 		[byte(n >> 24), byte(n >> 16), byte(n >> 8), byte(n)];
 	};
 
-	public func principalToSubaccount(principal : Principal) : Subaccount {
-		let idHash = Sha256.Digest(#sha224);
-		idHash.writeBlob(Principal.toBlob(principal));
-		let hashSum = idHash.sum();
-		let crc32Bytes = beBytes(CRC32.checksum(Blob.toArray(hashSum)));
-		let blob = Blob.fromArray(Array.append(crc32Bytes, Blob.toArray(hashSum)));
-
-		return blob;
+	public func principalToSubaccount(id : Principal) : [Nat8] {
+		let p = Blob.toArray(Principal.toBlob(id));
+		Array.tabulate(
+			32,
+			func(i : Nat) : Nat8 {
+				if (i >= p.size() + 1) 0 else if (i == 0) (Nat8.fromNat(p.size())) else (p[i - 1]);
+			},
+		);
 	};
 
 	public func defaultSubaccount() : Subaccount {
