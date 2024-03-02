@@ -21,14 +21,15 @@ module {
 		[byte(n >> 24), byte(n >> 16), byte(n >> 8), byte(n)];
 	};
 
-	public func principalToSubaccount(id : Principal) : [Nat8] {
+	public func principalToSubaccount(id : Principal) : Subaccount {
 		let p = Blob.toArray(Principal.toBlob(id));
 		Array.tabulate(
 			32,
 			func(i : Nat) : Nat8 {
 				if (i >= p.size() + 1) 0 else if (i == 0) (Nat8.fromNat(p.size())) else (p[i - 1]);
 			},
-		);
+		)
+		|> Blob.fromArray(_);
 	};
 
 	public func defaultSubaccount() : Subaccount {

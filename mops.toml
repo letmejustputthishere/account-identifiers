@@ -1,6 +1,6 @@
 [package]
 name = "account-identifier"
-version = "1.0.0"
+version = "1.0.1"
 description = "ICP ledger standard account identifiers"
 repository = "https://github.com/letmejustputthishere/account-identifiers"
 keywords = [ "accountid", "account", "identifier", "icp", "ledger" ]
